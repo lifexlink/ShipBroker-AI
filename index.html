@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShipBroker AI</title>
+  <meta name="description" content="AI-powered assistant for shipbrokers, shipowners, and shipyards." />
+  <style>
+    :root{
+      --bg:#07111f;
+      --card:#0d1b2a;
+      --card-2:#10243a;
+      --line:#1f3652;
+      --text:#e9f1fb;
+      --muted:#9fb3c8;
+      --primary:#2f80ed;
+      --primary-2:#56ccf2;
+      --gold:#f2c94c;
+      --success:#27ae60;
+      --danger:#eb5757;
+      --shadow:0 12px 40px rgba(0,0,0,0.28);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#07111f 0%, #0a1627 100%);
+      color:var(--text);
+      line-height:1.5;
+    }
+
+    a{color:var(--primary-2); text-decoration:none}
+    .container{
+      width:min(1120px, 92%);
+      margin:0 auto;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:18px 0;
+    }
+
+    .brand{
+      font-size:24px;
+      font-weight:700;
+      letter-spacing:0.4px;
+    }
+
+    .brand span{color:var(--gold)}
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.1fr 0.9fr;
+      gap:28px;
+      padding:20px 0 24px;
+      align-items:stretch;
+    }
+
+    .panel{
+      background:linear-gradient(180deg,var(--card) 0%, var(--card-2) 100%);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .hero-left{
+      padding:34px;
+    }
+
+    .hero h1{
+      font-size:46px;
+      line-height:1.08;
+      margin:0 0 14px;
+    }
+
+    .hero p{
+      color:var(--muted);
+      font-size:18px;
+      margin:0 0 22px;
+    }
+
+    .badge-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:22px;
+    }
+
+    .badge{
+      padding:8px 12px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      color:#dce9f7;
+      background:rgba(255,255,255,0.03);
+      font-size:14px;
+    }
+
+    .cta-row{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:none;
+      cursor:pointer;
+      padding:14px 18px;
+      border-radius:12px;
+      font-size:15px;
+      font-weight:700;
+      transition:0.2s ease;
+    }
+
+    .btn-primary{
+      background:linear-gradient(90deg,var(--primary),var(--primary-2));
+      color:white;
+    }
+
+    .btn-primary:hover{transform:translateY(-1px)}
+    .btn-secondary{
+      background:transparent;
+      color:#d7e6f8;
+      border:1px solid var(--line);
+    }
+
+    .hero-right{
+      padding:20px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .mini-card{
+      background:rgba(255,255,255,0.03);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+    }
+
+    .mini-card h3{
+      margin:0 0 8px;
+      font-size:16px;
+    }
+
+    .mini-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .app{
+      margin:20px 0 28px;
+      padding:20px;
+    }
+
+    .app-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .section-title{
+      margin:0 0 14px;
+      font-size:22px;
+    }
+
+    .field{
+      margin-bottom:14px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:7px;
+      font-size:14px;
+      color:#d7e6f8;
+    }
+
+    input, select, textarea{
+      width:100%;
+      padding:13px 14px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#081423;
+      color:var(--text);
+      outline:none;
+      font-size:14px;
+    }
+
+    textarea{min-height:110px; resize:vertical}
+
+    .helper{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:5px;
+    }
+
+    .action-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    .output-box{
+      background:#07111d;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+      min-height:420px;
+      white-space:pre-wrap;
+      color:#ecf4ff;
+      overflow:auto;
+    }
+
+    .output-placeholder{
+      color:var(--muted);
+    }
+
+    .toolbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+
+    .status{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .feature-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+      margin:22px 0 34px;
+    }
+
+    .feature{
+      padding:18px;
+    }
+
+    .feature h3{
+      margin:0 0 10px;
+      font-size:18px;
+    }
+
+    .feature p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .pricing{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      margin-bottom:34px;
+    }
+
+    .price-card{
+      padding:22px;
+    }
+
+    .price{
+      font-size:34px;
+      font-weight:700;
+      margin:8px 0 14px;
+    }
+
+    .muted{color:var(--muted)}
+
+    .list{
+      padding-left:18px;
+      color:#dce8f7;
+    }
+
+    .list li{
+      margin-bottom:8px;
+    }
+
+    .footer{
+      border-top:1px solid var(--line);
+      padding:20px 0 34px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    @media (max-width: 900px){
+      .hero,
+      .app-grid,
+      .feature-grid,
+      .pricing{
+        grid-template-columns:1fr;
+      }
+
+      .hero h1{font-size:34px}
+      .hero-left{padding:24px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="brand">ShipBroker <span>AI</span></div>
+      <div><a href="#app">Open App</a></div>
+    </div>
+
+    <section class="hero">
+      <div class="panel hero-left">
+        <h1>AI assistant for shipbrokers, shipowners, and shipyards</h1>
+        <p>
+          Generate chartering emails, repair RFQs, and negotiation replies in seconds.
+          Built for practical maritime work, not generic chat.
+        </p>
+
+        <div class="badge-row">
+          <div class="badge">Cargo Offers</div>
+          <div class="badge">Open Tonnage Emails</div>
+          <div class="badge">Repair RFQ</div>
+          <div class="badge">Negotiation Reply</div>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#app">Try Free Demo</a>
+          <a class="btn btn-secondary" href="#pricing">View Pricing</a>
+        </div>
+      </div>
+
+      <div class="panel hero-right">
+        <div class="mini-card">
+          <h3>Use case 1</h3>
+          <p>Input cargo details and get a ready-to-send cargo offer email.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Use case 2</h3>
+          <p>Draft ship repair inquiry emails to yards with clear scope items.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Use case 3</h3>
+          <p>Polish negotiation replies in professional maritime English.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="app" class="panel app">
+      <div class="toolbar">
+        <h2 class="section-title">Free Demo</h2>
+        <div class="status">Demo mode: generates practical sample output on the page</div>
+      </div>
+
+      <div class="app-grid">
+        <div>
+          <div class="field">
+            <label for="taskType">Task Type</label>
+            <select id="taskType">
+              <option value="cargo_offer">Cargo Offer Email</option>
+              <option value="open_tonnage">Open Tonnage Email</option>
+              <option value="repair_rfq">Ship Repair RFQ</option>
+              <option value="negotiation_reply">Negotiation Reply</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="cargo">Cargo / Vessel / Subject</label>
+            <input id="cargo" type="text" placeholder="e.g. 50,000 MT coal / MV SEA STAR / BWTS retrofit" />
+          </div>
+
+          <div class="field">
+            <label for="loadPort">Load Port / Current Position</label>
+            <input id="loadPort" type="text" placeholder="e.g. Indonesia / Singapore" />
+          </div>
+
+          <div class="field">
+            <label for="dischargePort">Discharge Port / Destination</label>
+            <input id="dischargePort" type="text" placeholder="e.g. China / Fujairah" />
+          </div>
+
+          <div class="field">
+            <label for="laycan">Laycan / ETA</label>
+            <input id="laycan" type="text" placeholder="e.g. 10-20 May / ETA 18 Apr" />
+          </div>
+
+          <div class="field">
+            <label for="details">Additional Details</label>
+            <textarea id="details" placeholder="Add specs, deadweight, preferred terms, repair scope, urgency, counteroffer position, etc."></textarea>
+            <div class="helper">Tip: the more practical details you give, the better the result.</div>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="generateOutput()">Generate</button>
+            <button class="btn btn-secondary" onclick="fillExample()">Fill Example</button>
+            <button class="btn btn-secondary" onclick="clearForm()">Clear</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="toolbar">
+            <div class="status">Generated Output</div>
+            <button class="btn btn-secondary" onclick="copyOutput()">Copy</button>
+          </div>
+          <div id="output" class="output-box">
+            <span class="output-placeholder">Your generated result will appear here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-grid">
+      <div class="panel feature">
+        <h3>Fast drafting</h3>
+        <p>Turn rough cargo, vessel, or repair notes into clean professional English.</p>
+      </div>
+      <div class="panel feature">
+        <h3>Industry-focused</h3>
+        <p>Designed for chartering, repair, and ship commercial communication.</p>
+      </div>
+      <div class="panel feature">
+        <h3>Easy to deploy</h3>
+        <p>Works on GitHub Pages now, and can later connect to OpenAI API for full automation.</p>
+      </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+      <div class="panel price-card">
+        <div class="muted">Starter</div>
+        <div class="price">Free</div>
+        <ul class="list">
+          <li>Demo generation</li>
+          <li>Basic templates</li>
+          <li>Manual support</li>
+        </ul>
+        <button class="btn btn-secondary">Current Plan</button>
+      </div>
+
+      <div class="panel price-card">
+        <div class="muted">Pro</div>
+        <div class="price">$29<span style="font-size:16px;font-weight:400">/month</span></div>
+        <ul class="list">
+          <li>Advanced prompts</li>
+          <li>Custom maritime templates</li>
+          <li>Priority support</li>
+          <li>API-powered generation</li>
+        </ul>
+        <a class="btn btn-primary" href="mailto:info@dockingadvisory.cn?subject=ShipBroker%20AI%20Pro%20Inquiry">Upgrade to Pro</a>
+      </div>
+    </section>
+
+    <div class="footer">
+      ShipBroker AI · Built for maritime commercial workflows · Contact:
+      <a href="mailto:info@dockingadvisory.cn">info@dockingadvisory.cn</a>
+    </div>
+  </div>
+
+  <script>
+    function fillExample() {
+      const taskType = document.getElementById('taskType');
+      taskType.value = 'cargo_offer';
+      document.getElementById('cargo').value = '50,000 MT coal';
+      document.getElementById('loadPort').value = 'Indonesia';
+      document.getElementById('dischargePort').value = 'China';
+      document.getElementById('laycan').value = '10-20 May';
+      document.getElementById('details').value =
+        'MV size preference: Supramax. Please keep the tone professional and concise. Mention prompt reply is appreciated.';
+    }
+
+    function clearForm() {
+      document.getElementById('taskType').value = 'cargo_offer';
+      document.getElementById('cargo').value = '';
+      document.getElementById('loadPort').value = '';
+      document.getElementById('dischargePort').value = '';
+      document.getElementById('laycan').value = '';
+      document.getElementById('details').value = '';
+      document.getElementById('output').innerHTML =
+        '<span class="output-placeholder">Your generated result will appear here.</span>';
+    }
+
+    function copyOutput() {
+      const text = document.getElementById('output').innerText.trim();
+      if (!text || text === 'Your generated result will appear here.') {
+        alert('No output to copy yet.');
+        return;
+      }
+      navigator.clipboard.writeText(text)
+        .then(() => alert('Copied to clipboard.'))
+        .catch(() => alert('Copy failed. Please copy manually.'));
+    }
+
+    function generateOutput() {
+      const taskType = document.getElementById('taskType').value;
+      const cargo = document.getElementById('cargo').value.trim();
+      const loadPort = document.getElementById('loadPort').value.trim();
+      const dischargePort = document.getElementById('dischargePort').value.trim();
+      const laycan = document.getElementById('laycan').value.trim();
+      const details = document.getElementById('details').value.trim();
+
+      if (!cargo && !details) {
+        alert('Please enter at least the main subject or some details.');
+        return;
+      }
+
+      let result = '';
+
+      if (taskType === 'cargo_offer') {
+        result =
+`Subject: Cargo Offer - ${cargo || 'Cargo'} ex ${loadPort || 'TBA'} to ${dischargePort || 'TBA'}
+
+Dear Sirs,
+
+We have the following cargo opportunity for your consideration:
+
+Cargo: ${cargo || 'TBA'}
+Loading Port: ${loadPort || 'TBA'}
+Discharging Port: ${dischargePort || 'TBA'}
+Laycan: ${laycan || 'TBA'}
+
+Additional Details:
+${details || 'As per further discussion.'}
+
+Please advise suitable tonnage with full style, position, and expected freight ideas.
+
+Prompt reply would be highly appreciated.
+
+Best regards,
+ShipBroker AI Demo`;
+
+      } else if (taskType === 'open_tonnage') {
+        result =
+`Subject: Open Tonnage - ${cargo || 'MV TBA'} ${loadPort || ''} ${laycan || ''}
+
+Dear Sirs,
+
+Please find our open tonnage as follows:
+
+Vessel: ${cargo || 'MV TBA'}
+Open Position: ${loadPort || 'TBA'}
+Destination / Trading Area: ${dischargePort || 'Worldwide / TBA'}
+ETA / Availability: ${laycan || 'TBA'}
+
+Further Details:
+${details || 'Full particulars can be provided upon request.'}
+
+We are inviting firm cargo ideas. Please revert with any matching business.
+
+Best regards,
+ShipBroker AI Demo`;
+
+      } else if (taskType === 'repair_rfq') {
+        result =
+`Subject: RFQ - ${cargo || 'Repair Project'} at ${loadPort || 'TBA'}
+
+Dear Sirs,
+
+We would like to request your quotation for the following repair / retrofit works:
+
+Project / Vessel: ${cargo || 'TBA'}
+Repair Port / Yard Location: ${loadPort || 'TBA'}
+Preferred Completion / ETA: ${laycan || 'TBA'}
+Redelivery / Destination: ${dischargePort || 'TBA'}
+
+Scope Summary:
+${details || 'Please quote based on attached/confirmed scope.'}
+
+Kindly provide:
+1. Commercial quotation
+2. Estimated repair duration
+3. Yard availability
+4. Exclusions and assumptions
+
+Your prompt response would be appreciated.
+
+Best regards,
+ShipBroker AI Demo`;
+
+      } else if (taskType === 'negotiation_reply') {
+        result =
+`Subject: Re: ${cargo || 'Commercial Discussion'}
+
+Dear Sirs,
+
+Thank you for your message.
+
+We have reviewed your latest position regarding ${cargo || 'the subject matter'}.
+For the sake of moving this discussion forward, we would like to propose the following:
+
+Current Position:
+- Load / Position: ${loadPort || 'TBA'}
+- Discharge / Destination: ${dischargePort || 'TBA'}
+- Timing: ${laycan || 'TBA'}
+
+Our Comments:
+${details || 'We remain interested and are prepared to discuss workable middle ground.'}
+
+Please review and let us know whether this can be accepted, or kindly advise your best revised terms.
+
+Best regards,
+ShipBroker AI Demo`;
+      }
+
+      document.getElementById('output').textContent = result;
+    }
+  </script>
+</body>
+</html>
