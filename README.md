@@ -69,3 +69,8 @@ Your commands are:
 <h2>Contact:</h2>
 <p>WhatsApp: +xxx</p>
 <p>Email: info@yourcompany.com</p>
+
+For full version access:
+Contact via WhatsApp / WeChat
+
+We will activate your account manually.
