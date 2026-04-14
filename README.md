@@ -43,3 +43,29 @@ Your commands are:
     /start: Execute <lesson>
     /continue: <...>
     /example: Execute <config-example>
+
+<h1>🚢 ShipBroker AI</h1>
+
+<p>AI-powered assistant for shipbrokers, shipowners, and shipyards.</p>
+
+<h2>What you can do:</h2>
+<ul>
+<li>Generate chartering emails in seconds</li>
+<li>Create RFQ for ship repair</li>
+<li>Match cargo with vessels</li>
+<li>Improve negotiation replies</li>
+</ul>
+
+<h2>Why use it?</h2>
+<p>Save 50% of your daily email time.</p>
+
+<h2>Try it now:</h2>
+<p>(你的工具入口)</p>
+
+<h2>Pricing:</h2>
+<p>Free trial available</p>
+<p>Full version: $29/month</p>
+
+<h2>Contact:</h2>
+<p>WhatsApp: +xxx</p>
+<p>Email: info@yourcompany.com</p>
